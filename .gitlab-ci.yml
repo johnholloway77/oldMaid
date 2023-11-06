@@ -1,0 +1,38 @@
+build-game:
+   stage: build
+   script:
+      - make cardGame
+   artifacts:
+      paths:
+         - cardGame
+
+build-test:
+   stage: build
+   script:
+      - make testGame
+   artifacts:
+      paths:
+         - testGame
+
+test-game:
+   stage: test
+   script:
+      - testGame
+      - make memcheck-test
+      - make static
+      - make style
+
+pages:
+   stage: deploy
+   dependencies:
+      - test-game
+   script:
+      - make coverage
+      - make docs
+   artifacts:
+      paths:
+         - coverage
+         - docs
+      expire_in: 14 days
+   only:
+      - master
