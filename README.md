@@ -25,3 +25,4 @@ Certain assumptions have been made:
 * All project source files for the project are named <code>*.cpp</code>.
   * Any needed source files that correspond to header files are found in <code>src/</code>.
   * There is a <code>main.cpp</code> found in <code>src/project/</code>.
+.
