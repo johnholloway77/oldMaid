@@ -3,11 +3,11 @@
 // Copyright (c) [2024] John Holloway. All Rights Reserved.
 //
 
-#include <stdio>
+#include <iostream>
 
 int main(int argc, char **argv){
 
-  std::cout << "Hello and goodbye!" std::endl;
+  std::cout << "Hello and goodbye!" << std::endl;
 
   return 0;
 }

@@ -15,7 +15,7 @@ TEST(CardTest, ConstructorTest){
   delete c;
 }
 
-TEST(CardTest, getRankTest){
+TEST(CardTest, GetRankTest){
 
   Card *c = new Card(Card::SPADE, Card::ACE);
 
@@ -25,7 +25,7 @@ TEST(CardTest, getRankTest){
 
 }
 
-TEST(CardTest, getSuitTest){
+TEST(CardTest, GetSuitTest){
 
   Card *c = new Card(Card::SPADE, Card::ACE);
 
