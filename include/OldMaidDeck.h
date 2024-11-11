@@ -3,10 +3,9 @@
 
 #include <Deck.h>
 
-
 class OldMaidDeck : public Deck {
  public:
-    void create();
+  void create();
 };
 
-#endif // OLDMAIDDECK_H
+#endif  // OLDMAIDDECK_H

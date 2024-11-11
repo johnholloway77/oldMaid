@@ -1,47 +1,48 @@
 #ifndef DECK_H
 #define DECK_H
 
-#include "Card.h"
 #include <vector>
+
+#include "Card.h"
 
 class Deck {
  public:
-    virtual ~Deck();
+  virtual ~Deck();
 
-    /**
-    * Shuffle the deck of cards.
-    */
-    virtual void shuffle();
+  /**
+   * Shuffle the deck of cards.
+   */
+  virtual void shuffle();
 
-    /**
-    * Add a card to the deck of cards.
-    * @param card Card added to deck.
-    */
-    virtual void addCard(Card* card);
+  /**
+   * Add a card to the deck of cards.
+   * @param card Card added to deck.
+   */
+  virtual void addCard(Card* card);
 
-    /**
-    * Get the top card from the deck of cards.
-    * @return Card on top of deck.
-    */
-    virtual Card* getCard();
+  /**
+   * Get the top card from the deck of cards.
+   * @return Card on top of deck.
+   */
+  virtual Card* getCard();
 
-    /**
-    * Size of the deck of cards.
-    * @return The size of the deck of cards.
-    */
-    virtual unsigned int size();
+  /**
+   * Size of the deck of cards.
+   * @return The size of the deck of cards.
+   */
+  virtual unsigned int size();
 
-    /**
-    * Create a standard deck of cards with thirteen cards (Ace to King)
-    * for each of four suits (Spade, Club, Heart, Diamond).
-    */
-    virtual void create();
+  /**
+   * Create a standard deck of cards with thirteen cards (Ace to King)
+   * for each of four suits (Spade, Club, Heart, Diamond).
+   */
+  virtual void create();
 
  protected:
-     /**
-     * The collection of cards that form the deck.
-     */
-    std::vector<Card*> deck;
+  /**
+   * The collection of cards that form the deck.
+   */
+  std::vector<Card*> deck;
 };
 
-#endif // DECK_H
+#endif  // DECK_H

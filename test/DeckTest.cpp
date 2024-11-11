@@ -7,25 +7,22 @@
 
 #include "../include/Deck.h"
 
-TEST(DeckTest, ConstructorTest){
-
+TEST(DeckTest, ConstructorTest) {
   Deck* d = new Deck();
 
   EXPECT_TRUE(d);
 
   delete d;
-
 }
 
-TEST(DeckTest, CreateDeckTest){
+TEST(DeckTest, CreateDeckTest) {
+  Deck* d = new Deck();
 
-    Deck* d = new Deck();
+  EXPECT_EQ(d->size(), 0);
 
-    EXPECT_EQ(d->size(), 0);
+  d->create();
 
-    d->create();
+  EXPECT_EQ(d->size(), 52);
 
-    EXPECT_EQ(d->size(), 52);
-
-    delete d;
+  delete d;
 }
