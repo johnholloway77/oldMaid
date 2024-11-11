@@ -41,7 +41,7 @@ GTEST_OBJECTS = $(GTEST_SOURCES:.cpp=.o)
 
 # Tool variables
 STATIC_ANALYSIS = cppcheck
-STATIC_FLAGS := --error-exitcode=1 --suppress=missingIncludeSystem --suppress=unusedFunction
+STATIC_FLAGS = --error-exitcode=1 --suppress=missingIncludeSystem --inline-suppr
 STYLE_CHECK = cpplint
 DESIGN_DIR = docs/design
 DOXY_DIR = docs
