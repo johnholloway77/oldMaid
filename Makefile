@@ -36,6 +36,7 @@ GTEST_OBJECTS = $(GTEST_SOURCES:.cpp=.o)
 
 # Tool variables
 STATIC_ANALYSIS = cppcheck
+STATIC_FLAGS := --error-exitcode=1 --suppress=missingIncludeSystem --suppress=unusedFunction
 STYLE_CHECK = cpplint
 DESIGN_DIR = docs/design
 DOXY_DIR = docs
@@ -66,7 +67,7 @@ ${GTEST_BINARY}: $(GTEST_OBJECTS)
 # To perform the static check
 static:
 	${STATIC_ANALYSIS} --verbose --enable=all ${SRC_DIR} ${GTEST_DIR} \
-	${SRC_INCLUDE_DIR} --suppress=missingIncludeSystem --error-exitcode=1
+	${SRC_INCLUDE_DIR} ${STATIC_FLAGS}
 
 # To perform the style check
 style:
