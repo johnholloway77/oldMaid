@@ -11,15 +11,14 @@
 #include "../include/Deck.h"
 
 TEST(DeckTest, ConstructorTest) {
-  Deck* d = new Deck();
+  std::unique_ptr<Deck> d(new Deck());
 
   EXPECT_TRUE(d);
 
-  delete d;
 }
 
 TEST(DeckTest, CreateDeckTest) {
-  Deck* d = new Deck();
+  std::unique_ptr<Deck> d(new Deck());
 
   EXPECT_EQ(d->size(), 0);
 
@@ -27,16 +26,15 @@ TEST(DeckTest, CreateDeckTest) {
 
   EXPECT_EQ(d->size(), 52);
 
-  delete d;
 }
 
 TEST(DeckTest, GetCardTest) {
-  Deck* d = new Deck();
+  std::unique_ptr<Deck> d(new Deck());
 
   d->create();
   EXPECT_EQ(d->size(), 52);
 
-  Card* c = d->getCard();
+  std::unique_ptr<Card> c(d->getCard());
 
   EXPECT_EQ(d->size(), 51);
 
@@ -48,7 +46,4 @@ TEST(DeckTest, GetCardTest) {
   std::cout << "Suit: " + Card::getSuit(c->suit) +
                    " Rank: " + Card::getRank(c->rank)
             << std::endl;
-
-  delete c;
-  delete d;
 }
