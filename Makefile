@@ -27,7 +27,7 @@ else
 endif
 CXXFLAGS := -Wall -Wextra -std=c++17
 DEBUG := -g -O0
-LIBS := -lncurses
+LIBS :=
 GTEST_LIB:= -lgtest
 
 # Object files (generated from source files)
@@ -54,7 +54,7 @@ endif
 
 # Rule to link the binary
 $(BINARY): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $@ $(OBJECTS) ${LIBS}
+	$(CXX) $(CXXFLAGS) -o $@ $(OBJECTS)
 
 ${GTEST_BINARY}: $(GTEST_OBJECTS)
 	${CXX} $(CXXFLAGS) $(DEBUGFLAGS) $(INCLUDE) -o $@ $^ -L/usr/local/lib ${GTEST_LIB} ${LIBS}
@@ -74,7 +74,7 @@ style:
 
 #Check for memory leaks with Valgrind. Off to Valhalla we go!!
 memcheck: ${GTEST_BINARY}
-	valgrind --tool=memcheck --leak-check=yes --error-exitcode=1 ./${GTEST_BINARY}
+	valgrind --tool=memcheck --leak-check=yes --error-exitcode=1 ./${GTEST_BINARY} ${LIBS}
 
 test: ${GTEST_BINARY}
 	./${GTEST_BINARY}
