@@ -8,8 +8,6 @@
 #include <algorithm>
 #include <random>
 
-#include "../include/Card.h"
-
 Deck::~Deck() {
   std::for_each(deck.begin(), deck.end(), [](Card* c) { delete c; });
 }
