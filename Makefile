@@ -20,15 +20,20 @@ ifeq ($(UNAME_S), FreeBSD)
     CXX := clang++
     INCLUDE = -I ${SRC_INCLUDE_DIR} -I ${GTEST_INCLUDE_DIR}
     CXXWITHCOVERAGEFLAGS = ${CXXFLAGS} -fprofile-instr-generate -fcoverage-mapping  #-fprofile-arcs -ftest-coverage
+    num_cores := $(shell sysctl -n hw.ncpu)
 else
     CXX := g++
     INCLUDE = -I ${SRC_INCLUDE_DIR}
 	CXXWITHCOVERAGEFLAGS = ${CXXFLAGS} -fprofile-arcs -ftest-coverage
+	num_cores := $(shell nproc)
 endif
 CXXFLAGS := -Wall -Wextra -std=c++17
 DEBUG := -g -O0
 LIBS :=
 GTEST_LIB:= -lgtest
+
+#tell gmake to use all the cores on the laptop or VM
+MAKEFLAGS += -j$(num_cores)
 
 # Object files (generated from source files)
 OBJECTS = $(SOURCES:.cpp=.o)
@@ -58,6 +63,7 @@ $(BINARY): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -o $@ $(OBJECTS)
 
 ${GTEST_BINARY}: $(GTEST_OBJECTS)
+	@echo "num_cores is: $(num_cores)"
 	${CXX} $(CXXFLAGS) $(DEBUGFLAGS) $(INCLUDE) -o $@ $^ -L/usr/local/lib ${GTEST_LIB} ${LIBS}
 
 # Rule to compile .cpp files into object files
