@@ -66,7 +66,7 @@ ${GTEST_BINARY}: $(GTEST_OBJECTS)
 # To perform the static check
 static:
 	${STATIC_ANALYSIS} --verbose --enable=all ${SRC_DIR} ${GTEST_DIR} \
-	${SRC_INCLUDE_DIR} --suppress=missingInclude --error-exitcode=1
+	${SRC_INCLUDE_DIR} --suppress=missingIncludeSystem --error-exitcode=1
 
 # To perform the style check
 # excluding SRC_NCURSES_DIR as it was not made by project authors, but needed to be included directly to run on gitlab
