@@ -13,8 +13,10 @@ Deck::~Deck() {
 }
 
 void Deck::shuffle() {
-  auto rng = std::default_random_engine{};
-  std::shuffle(std::begin(deck), std::end(deck), rng);
+  std::random_device rd;
+  std::seed_seq seed{rd(), rd(), rd(), rd()};
+  std::mt19937_64 random_generator(seed);
+  std::shuffle(deck.begin(), deck.end(), random_generator);
 }
 
 void Deck::addCard(Card* card) {
