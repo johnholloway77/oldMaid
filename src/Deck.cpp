@@ -24,9 +24,12 @@ void Deck::addCard(Card* card) {
 }
 
 Card* Deck::getCard() {
-  Card* c = deck.back();
-  deck.pop_back();
-  return c;
+  if (!deck.empty()) {
+    Card* c = deck.back();
+    deck.pop_back();
+    return c;
+  }
+  return nullptr;
 }
 
 unsigned int Deck::size() {

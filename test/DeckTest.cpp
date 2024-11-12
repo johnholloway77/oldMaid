@@ -26,6 +26,18 @@ TEST(DeckTest, CreateDeckTest) {
   EXPECT_EQ(d->size(), 52);
 }
 
+TEST(DeckTest, GetCardEmptyDeckTest) {
+  std::unique_ptr<Deck> d(new Deck());
+
+  EXPECT_EQ(d->size(), (unsigned)0);
+
+  std::cout << "deck size " << d->size() << std::endl;
+
+  std::unique_ptr<Card> c(d->getCard());
+
+  EXPECT_FALSE(c);
+}
+
 TEST(DeckTest, GetCardTest) {
   std::unique_ptr<Deck> d(new Deck());
 

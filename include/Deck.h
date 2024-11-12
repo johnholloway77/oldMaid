@@ -22,7 +22,7 @@ class Deck {
 
   /**
    * Get the top card from the deck of cards.
-   * @return Card on top of deck.
+   * @return Card on top of deck. If no card return nullptr
    */
   virtual Card* getCard();
 
