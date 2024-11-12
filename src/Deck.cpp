@@ -5,8 +5,10 @@
 
 #include "../include/Deck.h"
 
-#include <algorithm>
 #include <random>
+#ifdef __linux__
+#include <algorithm>
+#endif
 
 Deck::~Deck() {
   std::for_each(deck.begin(), deck.end(), [](Card* c) { delete c; });

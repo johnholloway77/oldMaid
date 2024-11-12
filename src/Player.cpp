@@ -6,6 +6,9 @@
 #include "../include/Player.h"
 
 #include <list>
+#ifdef __linux__
+#include <algorithm>
+#endif
 
 Player::~Player() {
   std::for_each(hand.begin(), hand.end(), [](Card* c) { delete c; });
