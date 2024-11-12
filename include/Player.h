@@ -12,7 +12,7 @@ class Player {
    * Create a player for the game.
    * @param n Name of the player.
    */
-  Player(const std::string& n) : name(n) {}
+  explicit Player(const std::string& n) : name(n) {}
   virtual ~Player();
 
   /**
