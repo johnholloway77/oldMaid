@@ -1,8 +1,9 @@
 #ifndef GOFISH_H
 #define GOFISH_H
 
-#include <Game.h>
 #include <vector>
+
+#include "Game.h"
 
 class OldMaid : public Game {
  public:
@@ -12,6 +13,7 @@ class OldMaid : public Game {
    * @param deck The deck for the game.
    */
   OldMaid(GameUI* ui, Deck* deck) : Game(ui, deck) {}
+
   virtual ~OldMaid() {}
   void dealCards(std::vector<Player*> p);
   void beforeTurn(unsigned int playerNum, unsigned int numPlayers);
