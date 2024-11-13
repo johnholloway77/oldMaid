@@ -48,5 +48,11 @@ void Game::start() {}
 void Game::checkIfPlayerOut() {}
 
 bool Game::hasSet(std::list<Card*>* hand, unsigned int size) {
-  return false;
+  std::unordered_map<Card::Rank, int> cardmap;
+
+  std::for_each(hand->begin(), hand->end(),
+                [&cardmap](Card* c) { cardmap[c->rank]++; });
+
+  return std::any_of(cardmap.begin(), cardmap.end(),
+                     [size](const auto& pair) { return pair.second >= size; });
 }
