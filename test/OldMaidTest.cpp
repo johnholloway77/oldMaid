@@ -161,3 +161,60 @@ TEST(OldMaidTest, HasSetOfThreeTest) {
   delete p1;
   delete d;
 }
+
+TEST(OldMaidTest, CheckOutTest) {
+  Player* p1 = new Player("Player1");
+  Player* p2 = new Player("Player2");
+  Player* p3 = new Player("Player3");
+
+  Deck* d(new Deck());
+
+  d->create();
+  d->shuffle();
+
+  std::unique_ptr<OldMaid> om(new OldMaid(nullptr, d));
+
+  om->addPlayer(p1);
+  om->addPlayer(p2);
+  om->addPlayer(p3);
+
+  EXPECT_EQ(om->getPlayers().size(), 3);
+
+  om->checkIfPlayerOut();
+
+  EXPECT_EQ(om->getPlayers().size(), 0);
+
+  delete p1;
+  delete p2;
+  delete p3;
+  delete d;
+}
+
+TEST(OldMaidTest, CheckOutCardsDealtTest) {
+  Player* p1 = new Player("Player1");
+  Player* p2 = new Player("Player2");
+  Player* p3 = new Player("Player3");
+
+  Deck* d(new Deck());
+
+  d->create();
+  d->shuffle();
+
+  std::unique_ptr<OldMaid> om(new OldMaid(nullptr, d));
+
+  om->addPlayer(p1);
+  om->addPlayer(p2);
+  om->addPlayer(p3);
+
+  EXPECT_EQ(om->getPlayers().size(), 3);
+  om->dealCards(om->getPlayers());
+
+  om->checkIfPlayerOut();
+
+  EXPECT_EQ(om->getPlayers().size(), 3);
+
+  delete p1;
+  delete p2;
+  delete p3;
+  delete d;
+}

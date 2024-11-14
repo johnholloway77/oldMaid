@@ -45,7 +45,18 @@ std::vector<Player*> Game::getPlayers() {
 
 void Game::start() {}
 
-void Game::checkIfPlayerOut() {}
+void Game::checkIfPlayerOut() {
+  auto iterator =
+      std::remove_if(players.begin(), players.end(), [&](Player* p) {
+        if (p->getHand()->empty()) {
+          playersGoneOut.push_back(p);
+          return true;
+        }
+        return false;
+      });
+
+  players.erase(iterator, players.end());
+}
 
 bool Game::hasSet(std::list<Card*>* hand, unsigned int size) {
   std::unordered_map<Card::Rank, int> cardmap;
