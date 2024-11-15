@@ -6,6 +6,7 @@
 #include "../include/Player.h"
 
 #include <list>
+#include <random>
 #ifdef __linux__
 #include <algorithm>
 #endif
@@ -36,4 +37,16 @@ Card* Player::getCard(unsigned int index) {
 
 std::list<Card*>* Player::getHand() {
   return &hand;
+}
+
+void Player::takeCard(Player* otherPlayer) {
+  std::random_device random_device;
+  std::mt19937_64 gen(random_device());
+  std::uniform_int_distribution<> distribution(
+      0, otherPlayer->getHand()->size() - 1);
+  int randomPickedCardIndex = distribution(gen);
+  Card* c = otherPlayer->getCard(randomPickedCardIndex);
+  if (c) {
+    this->addCard(c);
+  }
 }

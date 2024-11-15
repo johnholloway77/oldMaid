@@ -69,3 +69,23 @@ TEST(PlayerTest, GetHandTest) {
    * by smart pointer
    */
 }
+
+TEST(PlayerTest, TakeCardTest) {
+  Player* p1 = (new Player("TakeCardTest_Player1"));
+  Player* p2 = (new Player("TakeCardTest_Player2"));
+  Card* c(new Card(Card::SPADE, Card::ACE));
+
+  EXPECT_EQ(p1->getHand()->size(), 0);
+  EXPECT_EQ(p2->getHand()->size(), 0);
+
+  p1->addCard(c);
+  EXPECT_EQ(p1->getHand()->size(), 1);
+  EXPECT_EQ(p2->getHand()->size(), 0);
+
+  p2->takeCard(p1);
+  EXPECT_EQ(p1->getHand()->size(), 0);
+  EXPECT_EQ(p2->getHand()->size(), 1);
+
+  delete p1;
+  delete p2;
+}

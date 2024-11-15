@@ -33,6 +33,12 @@ class Player {
   std::list<Card*>* getHand();
 
   /**
+   * Take a card from another player's hand.
+   * @param player The player from whom this player is taken a random card.
+   */
+  void takeCard(Player* player);
+
+  /**
    * The player's name.
    */
   const std::string name;
