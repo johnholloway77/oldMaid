@@ -28,8 +28,10 @@ void Game::checkIfPlayerOut() {
   auto iterator =
       std::remove_if(players.begin(), players.end(), [&](Player* p) {
         if (p->getHand()->empty()) {
+#ifdef DEBUGPRINT
           std::cout << p->name << " has " << p->getHand()->size() << " cards"
                     << std::endl;
+#endif
           playersGoneOut.push_back(p);
           return true;
         }

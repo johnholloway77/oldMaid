@@ -32,14 +32,18 @@ TEST(OldMaidTest, DealCardsThreePlayerTest) {
     EXPECT_GE(player->getHand()->size(), 16);
     EXPECT_LE(player->getHand()->size(), 18);
 
-    //    std::cout << player->name + " has this many cards: "
-    //              << player->getHand()->size() << std::endl;
-    //
-    //    for (auto card : *player->getHand()) {
-    //      std::cout << "\t Suit: " + Card::getSuit(card->suit) +
-    //                       " Rank: " + Card::getRank(card->rank)
-    //                << std::endl;
-    //    }
+#ifdef DEBUGPRINT
+    std::cout << "DealCardsThreePlayerTest" << std::end;
+    
+    std::cout << player->name + " has this many cards: "
+              << player->getHand()->size() << std::endl;
+
+    for (auto card : *player->getHand()) {
+      std::cout << "\t Suit: " + Card::getSuit(card->suit) +
+                       " Rank: " + Card::getRank(card->rank)
+                << std::endl;
+    }
+#endif
   }
 
   delete p1;
@@ -243,8 +247,10 @@ TEST(OldMaidTest, IsOutTest) {
   EXPECT_EQ(p2->getHand()->size(), 0);
 
   EXPECT_EQ(om->getPlayers().size(), 1);
-
+#ifdef DEBUGPRINT
   std::cout << "players() size: " << om->getPlayers().size() << std::endl;
+#endif
+
   EXPECT_TRUE(om->isOver());
 
   delete p1;
@@ -273,28 +279,23 @@ TEST(OldMaidTest, BeforeTurnThreePlayerTest) {
   for (auto player : om->getPlayers()) {
     EXPECT_GE(player->getHand()->size(), 16);
     EXPECT_LE(player->getHand()->size(), 18);
-
-    //    std::cout << player->name + " has this many cards: "
-    //              << player->getHand()->size() << std::endl;
-    //
-    //    for (auto card : *player->getHand()) {
-    //      std::cout << "\t Suit: " + Card::getSuit(card->suit) +
-    //                       " Rank: " + Card::getRank(card->rank)
-    //                << std::endl;
-    //    }
   }
 
+#ifdef DEBUGPRINT
   for (auto player : om->getPlayers()) {
     std::cout << player->name << " has " << player->getHand()->size()
               << " cards" << std::endl;
   }
+#endif
 
   om->beforeTurn(0, om->getPlayers().size());
 
+#ifdef DEBUGPRINT
   for (auto player : om->getPlayers()) {
     std::cout << player->name << " has " << player->getHand()->size()
               << " cards" << std::endl;
   }
+#endif
 
   delete p1;
   delete p2;

@@ -30,9 +30,9 @@ TEST(DeckTest, GetCardEmptyDeckTest) {
   std::unique_ptr<Deck> d(new Deck());
 
   EXPECT_EQ(d->size(), (unsigned)0);
-
+#ifdef DEBUGPRINT
   std::cout << "deck size " << d->size() << std::endl;
-
+#endif
   std::unique_ptr<Card> c(d->getCard());
 
   EXPECT_FALSE(c);
@@ -53,9 +53,11 @@ TEST(DeckTest, GetCardTest) {
   EXPECT_TRUE((c->suit >= 0) && (c->suit <= 3));
   EXPECT_TRUE((c->rank >= 0) && (c->rank <= 13));
 
+#ifdef DEBUGPRINT
   std::cout << "Suit: " + Card::getSuit(c->suit) +
                    " Rank: " + Card::getRank(c->rank)
             << std::endl;
+#endif
 }
 
 TEST(DeckTest, RandomCardTest) {
@@ -78,12 +80,14 @@ TEST(DeckTest, RandomCardTest) {
 
   EXPECT_TRUE(pickup1);
 
+#ifdef DEBUGPRINT
   std::cout << "Card 1\n\tSuit: " + Card::getSuit(d1_c1->suit) +
                    " Rank: " + Card::getRank(d1_c1->rank)
             << std::endl
             << "Card 2\n\tSuit: " + Card::getSuit(d2_c1->suit) +
                    " Rank: " + Card::getRank(d2_c1->rank)
             << std::endl;
+#endif
 
   d1->shuffle();
   d2->shuffle();
@@ -133,11 +137,12 @@ TEST(DeckTest, RandomCardTest) {
    * John likes those odds for a test
    */
   EXPECT_FALSE(pickup2 && pickup3 && pickup4 && pickup5 && pickup6);
-
+#ifdef DEBUGPRINT
   std::cout << "Deck 1 Card 6\n\tSuit: " + Card::getSuit(d1_c6->suit) +
                    " Rank: " + Card::getRank(d1_c6->rank)
             << std::endl
             << "Deck 2 Card 6\n\tSuit: " + Card::getSuit(d2_c6->suit) +
                    " Rank: " + Card::getRank(d2_c6->rank)
             << std::endl;
+#endif
 }
