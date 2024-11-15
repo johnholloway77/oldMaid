@@ -33,8 +33,8 @@ TEST(OldMaidTest, DealCardsThreePlayerTest) {
     EXPECT_LE(player->getHand()->size(), 18);
 
 #ifdef DEBUGPRINT
-    std::cout << "DealCardsThreePlayerTest" << std::end;
-    
+    std::cout << "\nDealCardsThreePlayerTest" << std::endl;
+
     std::cout << player->name + " has this many cards: "
               << player->getHand()->size() << std::endl;
 
@@ -248,6 +248,7 @@ TEST(OldMaidTest, IsOutTest) {
 
   EXPECT_EQ(om->getPlayers().size(), 1);
 #ifdef DEBUGPRINT
+  std::cout << "\nIsOutTest" << std::endl;
   std::cout << "players() size: " << om->getPlayers().size() << std::endl;
 #endif
 
@@ -282,6 +283,8 @@ TEST(OldMaidTest, BeforeTurnThreePlayerTest) {
   }
 
 #ifdef DEBUGPRINT
+  std::cout << "\nBeforeTurnThreePlayerTest" << std::endl;
+
   for (auto player : om->getPlayers()) {
     std::cout << player->name << " has " << player->getHand()->size()
               << " cards" << std::endl;
@@ -291,6 +294,8 @@ TEST(OldMaidTest, BeforeTurnThreePlayerTest) {
   om->beforeTurn(0, om->getPlayers().size());
 
 #ifdef DEBUGPRINT
+  std::cout << "\nBeforeTurnThreePlayerTest" << std::endl;
+
   for (auto player : om->getPlayers()) {
     std::cout << player->name << " has " << player->getHand()->size()
               << " cards" << std::endl;

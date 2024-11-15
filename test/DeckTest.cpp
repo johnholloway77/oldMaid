@@ -31,6 +31,8 @@ TEST(DeckTest, GetCardEmptyDeckTest) {
 
   EXPECT_EQ(d->size(), (unsigned)0);
 #ifdef DEBUGPRINT
+
+  std::cout << "\nGetCardEmptyDeckTest:" << std::endl;
   std::cout << "deck size " << d->size() << std::endl;
 #endif
   std::unique_ptr<Card> c(d->getCard());
@@ -81,6 +83,8 @@ TEST(DeckTest, RandomCardTest) {
   EXPECT_TRUE(pickup1);
 
 #ifdef DEBUGPRINT
+  std::cout << "\nRandomCardTest:" << std::endl;
+
   std::cout << "Card 1\n\tSuit: " + Card::getSuit(d1_c1->suit) +
                    " Rank: " + Card::getRank(d1_c1->rank)
             << std::endl
@@ -138,6 +142,8 @@ TEST(DeckTest, RandomCardTest) {
    */
   EXPECT_FALSE(pickup2 && pickup3 && pickup4 && pickup5 && pickup6);
 #ifdef DEBUGPRINT
+  std::cout << "\nRandomCardTest:" << std::endl;
+
   std::cout << "Deck 1 Card 6\n\tSuit: " + Card::getSuit(d1_c6->suit) +
                    " Rank: " + Card::getRank(d1_c6->rank)
             << std::endl

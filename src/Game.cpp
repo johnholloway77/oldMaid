@@ -29,6 +29,8 @@ void Game::checkIfPlayerOut() {
       std::remove_if(players.begin(), players.end(), [&](Player* p) {
         if (p->getHand()->empty()) {
 #ifdef DEBUGPRINT
+          std::cout << "\nGame::checkIfPlayerOut" << std::endl;
+
           std::cout << p->name << " has " << p->getHand()->size() << " cards"
                     << std::endl;
 #endif
@@ -45,7 +47,7 @@ bool Game::hasSet(std::list<Card*>* hand, unsigned int size) {
   std::unordered_map<Card::Rank, int> cardmap;
 
   std::for_each(hand->begin(), hand->end(),
-                [&cardmap](Card* c) { cardmap[c->rank]++; });
+                [&cardmap](const Card* c) { cardmap[c->rank]++; });
 
   return std::any_of(cardmap.begin(), cardmap.end(),
                      [size](const auto& pair) { return pair.second >= size; });
