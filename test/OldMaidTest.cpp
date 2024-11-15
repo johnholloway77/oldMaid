@@ -218,3 +218,140 @@ TEST(OldMaidTest, CheckOutCardsDealtTest) {
   delete p3;
   delete d;
 }
+
+TEST(OldMaidTest, IsOutTest) {
+  Player* p1 = new Player("Player1_IsOutTest");
+  Player* p2 = new Player("Player2_IsOutTest");
+
+  Deck* d(new Deck());
+
+  d->create();
+  d->shuffle();
+
+  std::unique_ptr<OldMaid> om(new OldMaid(nullptr, d));
+
+  om->addPlayer(p1);
+
+  EXPECT_EQ(om->getPlayers().size(), 1);
+  om->dealCards(om->getPlayers());
+
+  om->addPlayer(p2);
+  EXPECT_EQ(om->getPlayers().size(), 2);
+
+  om->checkIfPlayerOut();
+
+  EXPECT_EQ(p2->getHand()->size(), 0);
+
+  EXPECT_EQ(om->getPlayers().size(), 1);
+
+  std::cout << "players() size: " << om->getPlayers().size() << std::endl;
+  EXPECT_TRUE(om->isOver());
+
+  delete p1;
+  delete p2;
+  delete d;
+}
+
+TEST(OldMaidTest, BeforeTurnThreePlayerTest) {
+  Player* p1 = new Player("Player1");
+  Player* p2 = new Player("Player2");
+  Player* p3 = new Player("Player3");
+
+  Deck* d(new Deck());
+
+  d->create();
+  d->shuffle();
+
+  std::unique_ptr<OldMaid> om(new OldMaid(nullptr, d));
+
+  om->addPlayer(p1);
+  om->addPlayer(p2);
+  om->addPlayer(p3);
+
+  om->dealCards(om->getPlayers());
+
+  for (auto player : om->getPlayers()) {
+    EXPECT_GE(player->getHand()->size(), 16);
+    EXPECT_LE(player->getHand()->size(), 18);
+
+    //    std::cout << player->name + " has this many cards: "
+    //              << player->getHand()->size() << std::endl;
+    //
+    //    for (auto card : *player->getHand()) {
+    //      std::cout << "\t Suit: " + Card::getSuit(card->suit) +
+    //                       " Rank: " + Card::getRank(card->rank)
+    //                << std::endl;
+    //    }
+  }
+
+  for (auto player : om->getPlayers()) {
+    std::cout << player->name << " has " << player->getHand()->size()
+              << " cards" << std::endl;
+  }
+
+  om->beforeTurn(0, om->getPlayers().size());
+
+  for (auto player : om->getPlayers()) {
+    std::cout << player->name << " has " << player->getHand()->size()
+              << " cards" << std::endl;
+  }
+
+  delete p1;
+  delete p2;
+  delete p3;
+  delete d;
+}
+
+TEST(OldMaidTest, AfterTurnTest) {
+  Player* p1 = new Player("Player1");
+
+  Deck* d(new Deck());
+
+  d->create();
+  d->shuffle();
+
+  std::unique_ptr<OldMaid> om(new OldMaid(nullptr, d));
+
+  om->addPlayer(p1);
+
+  om->afterTurn(p1, nullptr, nullptr);
+
+  delete p1;
+  delete d;
+}
+
+TEST(OldMaidTest, StartTest) {
+  Player* p1 = new Player("Player1");
+
+  Deck* d(new Deck());
+
+  d->create();
+  d->shuffle();
+
+  std::unique_ptr<OldMaid> om(new OldMaid(nullptr, d));
+
+  om->addPlayer(p1);
+
+  om->start();
+
+  delete p1;
+  delete d;
+}
+
+TEST(OldMaidTest, TurnOverTest) {
+  Player* p1 = new Player("Player1");
+
+  Deck* d(new Deck());
+
+  d->create();
+  d->shuffle();
+
+  std::unique_ptr<OldMaid> om(new OldMaid(nullptr, d));
+
+  om->addPlayer(p1);
+
+  EXPECT_FALSE(om->turnOver());
+
+  delete p1;
+  delete d;
+}

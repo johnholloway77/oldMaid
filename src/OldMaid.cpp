@@ -6,11 +6,13 @@
 #include "../include/OldMaid.h"
 
 #include <random>
+
+#include "../include/Player.h"
 #ifdef __linux__
 #include <algorithm>
 #endif
 
-void OldMaid::dealCards(std::vector<Player*> p) {
+void OldMaid::dealCards(const std::vector<Player*> p) {
   std::random_device random_device;
   std::mt19937_64 gen(random_device());
   std::uniform_int_distribution<> distribution(0, 3);
@@ -37,6 +39,18 @@ void OldMaid::dealCards(std::vector<Player*> p) {
 
 void OldMaid::beforeTurn(unsigned int playerNum, unsigned int numPlayers) {
   // Implementation of beforeTurn
+
+  int givingNum = static_cast<int>(playerNum) - 1 < 0
+                      ? numPlayers - 1
+                      : static_cast<int>(playerNum) - 1;
+
+  auto givingPlayer = players.begin();
+  std::advance(givingPlayer, givingNum);
+
+  auto receivingPlayer = players.begin();
+  std::advance(receivingPlayer, playerNum);
+
+  (*receivingPlayer)->takeCard((*givingPlayer));
 }
 
 void OldMaid::afterTurn(Player* currentPlayer, std::vector<Player*>* players,
@@ -45,11 +59,11 @@ void OldMaid::afterTurn(Player* currentPlayer, std::vector<Player*>* players,
 }
 
 bool OldMaid::turnOver() {
-  // Implementation of turnOver
-  return true;  // or some other logic
+  // Implementation of turnOver// or some other logic
+  return false;
 }
 
 bool OldMaid::isOver() {
   // Implementation of isOver
-  return false;  // or some other logic
+  return (players.size() == (unsigned)1);  // or some other logic
 }

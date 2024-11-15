@@ -15,12 +15,12 @@ class OldMaid : public Game {
   OldMaid(GameUI* ui, Deck* deck) : Game(ui, deck) {}
 
   virtual ~OldMaid() {}
-  void dealCards(std::vector<Player*> p);
-  void beforeTurn(unsigned int playerNum, unsigned int numPlayers);
+  void dealCards(std::vector<Player*> p) override;
+  void beforeTurn(unsigned int playerNum, unsigned int numPlayers) override;
   void afterTurn(Player* currentPlayer, std::vector<Player*>* players,
-                 Card* played);
-  bool turnOver();
-  bool isOver();
+                 Card* played) override;
+  bool turnOver() override;
+  bool isOver() override;
 };
 
 #endif  // GOFISH_H
