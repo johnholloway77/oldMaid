@@ -75,9 +75,9 @@ void OldMaid::duringTurn(unsigned int playerNum) {
   while (hasSet((*player)->getHand(), 2)) {
     std::unordered_map<Card::Rank, Card*> cardMap;
     std::vector<Card*> toDiscard;
+    auto& hand = *(*player)->getHand();
 
-    for (auto iterator = (*player)->getHand()->begin();
-         iterator != (*player)->getHand()->end();) {
+    for (auto iterator = hand.begin(); iterator != hand.end();) {
       Card* c = *iterator;
 
       // find pairs of cards
@@ -99,14 +99,13 @@ void OldMaid::duringTurn(unsigned int playerNum) {
         toDiscard.push_back(c);
         toDiscard.push_back(matchingCard);
 
-        iterator = (*player)->getHand()->erase(iterator);
-        (*player)->getHand()->erase(
-            std::remove_if((*player)->getHand()->begin(),
-                           (*player)->getHand()->end(),
-                           [&c, &matchingCard](Card* cardPointer) {
-                             return cardPointer == matchingCard;
-                           }),
-            (*player)->getHand()->end());
+        iterator = hand.erase(iterator);
+
+        auto matchingIterator =
+            std::find(hand.begin(), hand.end(), matchingCard);
+        if (matchingIterator != hand.end()) {
+          hand.erase(matchingIterator);
+        }
 
       } else {
         cardMap[c->rank] = c;

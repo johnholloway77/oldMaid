@@ -338,11 +338,11 @@ TEST(OldMaidTest, DuringTurnTest) {
 
   om->duringTurn(0);
 
+  EXPECT_LT(p1->getHand()->size(), player1CardsDealt);
+
   delete p1;
   delete p2;
   delete d;
-
-  EXPECT_LT(p1->getHand()->size(), player1CardsDealt);
 }
 
 TEST(OldMaidTest, StartTest) {

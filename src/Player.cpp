@@ -12,9 +12,17 @@
 #endif
 
 Player::~Player() {
-  std::for_each(hand.begin(), hand.end(), [](Card* c) { delete c; });
-  std::for_each(discardedCards.begin(), discardedCards.end(),
-                [](Card* c) { delete c; });
+  //  std::for_each(hand.begin(), hand.end(), [](Card* c) { delete c; });
+  //  std::for_each(discardedCards.begin(), discardedCards.end(),
+  //                [](Card* c) { delete c; });
+
+  for (auto card : hand) {
+    delete card;
+  }
+
+  for (auto card : discardedCards) {
+    delete card;
+  }
 }
 
 void Player::addCard(Card* c) {
