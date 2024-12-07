@@ -12,11 +12,11 @@ class OldMaidUI : public GameUI {
   OldMaidUI() {}
   ~OldMaidUI() {}
 
-  unsigned int requestCard(Player* p, std::list<Card*>* hand);
-  void playFailed(Player* player);
-  void playSucceeded(const std::string& playString, Player* player);
-  void outOfGame(Player* player);
-  void showGameOutcome(std::vector<Player*> players);
+  unsigned int requestCard(Player* p, std::list<Card*>* hand) override;
+  void playFailed(Player* player) override;
+  void playSucceeded(const std::string& playString, Player* player) override;
+  void outOfGame(Player* player) override;
+  void showGameOutcome(std::vector<Player*> players) override;
 };
 
 #endif  // OLDMAIDUI_H
