@@ -54,32 +54,126 @@ TEST(OldMaidUITest, RequestCardTest) {
 }
 
 TEST(OldMaidUITest, PlayFailedTest) {
-  FAIL();
+  std::string expectedOutput =
+      "Player1 failed to gain a new pair and discard cards\n"
+      "Player1 hand size has increased to 3 cards\n";
+
+  std::streambuf* original_stdout = std::cout.rdbuf();
+
+  std::ostringstream discardedOutput;
+  std::ostringstream capturedOutput;
+
+  Player* p1 = new Player("Player1");
+  Player* p2 = new Player("Player2");
+
+  Deck* d(new Deck());
+  d->create();
+  d->shuffle();
+
+  OldMaidUI* old_maid_ui(new OldMaidUI());
+  std::unique_ptr<OldMaid> om(new OldMaid(old_maid_ui, d));
+
+  Card* card1(new Card(Card::SPADE, Card::ACE));
+  Card* card2(new Card(Card::SPADE, Card::KING));
+  Card* card3(new Card(Card::SPADE, Card::QUEEN));
+  Card* card4(new Card(Card::SPADE, Card::JACK));
+
+  p1->addCard(card1);
+  p1->addCard(card2);
+
+  p2->addCard(card3);
+  p2->addCard(card4);
+
+  om->addPlayer(p1);
+  om->addPlayer(p2);
+
+  int player1CardsDealt = p1->getHand()->size();
+
+  std::cout.rdbuf(discardedOutput.rdbuf());
+  om->beforeTurn(0, om->getPlayers().size());
+
+  std::cout.rdbuf(capturedOutput.rdbuf());
+  om->duringTurn(0);
+  std::cout.rdbuf(original_stdout);
+
+  EXPECT_GT(p1->getHand()->size(), player1CardsDealt);
+  EXPECT_EQ(expectedOutput, capturedOutput.str());
+
+  delete p1;
+  delete p2;
+  delete d;
+  delete old_maid_ui;
 }
 
 TEST(OldMaidUITest, PlaySucceededTest) {
-  FAIL();
+  std::string expectedOutput =
+      "Player1 discarded the following pair:\n\tThe ACE of .* and the ACE of "
+      ".*\nPlayer1 hand size has decreased to 1 cards\n";
+
+  std::streambuf* original_stdout = std::cout.rdbuf();
+
+  std::ostringstream discardedOutput;
+  std::ostringstream capturedOutput;
+
+  Player* p1 = new Player("Player1");
+  Player* p2 = new Player("Player2");
+
+  Deck* d(new Deck());
+  d->create();
+  d->shuffle();
+
+  OldMaidUI* old_maid_ui(new OldMaidUI());
+  std::unique_ptr<OldMaid> om(new OldMaid(old_maid_ui, d));
+
+  Card* card1(new Card(Card::SPADE, Card::ACE));
+  Card* card2(new Card(Card::CLUB, Card::ACE));
+  Card* card3(new Card(Card::DIAMOND, Card::ACE));
+  Card* card4(new Card(Card::HEART, Card::ACE));
+
+  p1->addCard(card1);
+  p1->addCard(card2);
+
+  p2->addCard(card3);
+  p2->addCard(card4);
+
+  om->addPlayer(p1);
+  om->addPlayer(p2);
+
+  std::cout.rdbuf(discardedOutput.rdbuf());
+  om->beforeTurn(0, om->getPlayers().size());
+
+  std::cout.rdbuf(capturedOutput.rdbuf());
+  om->duringTurn(0);
+  std::cout.rdbuf(original_stdout);
+
+  // EXPECT_EQ(expectedOutput, capturedOutput.str());
+  EXPECT_THAT(capturedOutput.str(), ::testing::MatchesRegex(expectedOutput));
+
+  delete p1;
+  delete p2;
+  delete d;
+  delete old_maid_ui;
 }
 
-// TEST(OldMaidUITest, OutOfGameTest) {
-//   Player* p1 = new Player("OutOfGameTest_Player");
-//
-//   OldMaidUI* omUI(new OldMaidUI());
-//
-//   std::streambuf* original_stdout = std::cout.rdbuf();
-//
-//   std::ostringstream capturedOutput;
-//   std::cout.rdbuf(capturedOutput.rdbuf());
-//
-//   omUI->outOfGame(p1);
-//
-//   std::cout.rdbuf(original_stdout);
-//
-//   EXPECT_EQ(capturedOutput.str(), p1->name + " is out of the game\n");
-//
-//   delete p1;
-//   delete omUI;
-// }
+TEST(OldMaidUITest, OutOfGameTest) {
+  Player* p1 = new Player("OutOfGameTest_Player");
+
+  OldMaidUI* omUI(new OldMaidUI());
+
+  std::streambuf* original_stdout = std::cout.rdbuf();
+
+  std::ostringstream capturedOutput;
+  std::cout.rdbuf(capturedOutput.rdbuf());
+
+  omUI->outOfGame(p1);
+
+  std::cout.rdbuf(original_stdout);
+
+  EXPECT_EQ(capturedOutput.str(), p1->name + " is out of the game\n");
+
+  delete p1;
+  delete omUI;
+}
 
 TEST(OldMaidUITest, OutOfGameIntegrationTest) {
   std::streambuf* original_stdout = std::cout.rdbuf();

@@ -13,8 +13,8 @@ class OldMaidUI : public GameUI {
   ~OldMaidUI() {}
 
   unsigned int requestCard(Player* p, std::list<Card*>* hand);
-  void playFailed();
-  void playSucceeded();
+  void playFailed(Player* player);
+  void playSucceeded(const std::string& playString, Player* player);
   void outOfGame(Player* player);
   void showGameOutcome(std::vector<Player*> players);
 };

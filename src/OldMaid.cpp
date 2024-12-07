@@ -69,10 +69,15 @@ void OldMaid::beforeTurn(unsigned int playerNum, unsigned int numPlayers) {
 }
 
 void OldMaid::duringTurn(unsigned int playerNum) {
+  bool playSuccessful = false;
+  std::string playString;
+
   auto player = players.begin();
   std::advance(player, playerNum);
 
   while (hasSet((*player)->getHand(), 2)) {
+    playSuccessful = true;
+
     std::unordered_map<Card::Rank, Card*> cardMap;
     std::vector<Card*> toDiscard;
     auto& hand = *(*player)->getHand();
@@ -86,13 +91,11 @@ void OldMaid::duringTurn(unsigned int playerNum) {
       if (card_iterator != cardMap.end()) {
         Card* matchingCard = card_iterator->second;
 
-        std::string success_string =
-            (*player)->name + " discarded the following pair:\n\tThe " +
-            Card::getRank(c->rank) + " of " + Card::getSuit(c->suit) +
-            " and the " + Card::getRank(matchingCard->rank) + " of " +
-            Card::getSuit(matchingCard->suit);
-
-        std::cout << success_string << std::endl;
+        playString += (*player)->name +
+                      " discarded the following pair:\n\tThe " +
+                      Card::getRank(c->rank) + " of " + Card::getSuit(c->suit) +
+                      " and the " + Card::getRank(matchingCard->rank) + " of " +
+                      Card::getSuit(matchingCard->suit) + "\n";
 
         cardMap.erase(c->rank);
 
@@ -116,9 +119,13 @@ void OldMaid::duringTurn(unsigned int playerNum) {
     std::for_each(toDiscard.begin(), toDiscard.end(), [player](Card* card) {
       (*player)->getDiscardedCards()->push_back(card);
     });
+  }
 
-    std::cout << (*player)->name << " has " << (*player)->getHand()->size()
-              << " cards in their hand" << std::endl;
+  if (playSuccessful) {
+    ui->playSucceeded(playString, (*player));
+
+  } else {
+    ui->playFailed(*player);
   }
 }
 
@@ -131,6 +138,5 @@ bool OldMaid::turnOver() {
 bool OldMaid::isOver() {
   // Implementation of isOver
 
-  // std::cout << "OldMaid::isOver has not been implemented";
   return (players.empty());  // or some other logic
 }

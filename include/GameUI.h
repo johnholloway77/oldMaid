@@ -3,6 +3,7 @@
 
 #include <list>
 #include <vector>
+
 #include "Card.h"
 #include "Player.h"
 
@@ -21,12 +22,12 @@ class GameUI {
   /**
    * Indicate that the player's turn failed (e.g. didn't get a matching card).
    */
-  virtual void playFailed() = 0;
+  virtual void playFailed(Player* player) = 0;
 
   /**
    * Indicate that the player's turn succeeded (e.g. got a matching card).
    */
-  virtual void playSucceeded() = 0;
+  virtual void playSucceeded(const std::string& playString, Player* player) = 0;
 
   /**
    * Show the outcome of the game (e.g. player scores)

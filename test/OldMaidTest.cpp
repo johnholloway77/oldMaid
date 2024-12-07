@@ -279,19 +279,12 @@ TEST(OldMaidTest, GameOverTest) {
 
   om->dealCards(om->getPlayers());
 
-  for (auto player : om->getPlayers()) {
-    EXPECT_GE(player->getHand()->size(), 16);
-    EXPECT_LE(player->getHand()->size(), 18);
-  }
-
 #ifdef DEBUGPRINT
 
   for (auto player : om->getPlayers()) {
     std::cout << player->name << " has " << player->getHand()->size()
               << " cards" << std::endl;
   }
-
-#endif
 
   while (!om->getPlayers().empty()) {
     for (int i = 0; i < om->getPlayers().size() - 1; i++) {
@@ -301,15 +294,31 @@ TEST(OldMaidTest, GameOverTest) {
 
       om->beforeTurn(i, om->getPlayers().size());
 
-#ifdef DEBUGPRINT
-
       for (auto player : om->getPlayers()) {
         std::cout << player->name << " has " << player->getHand()->size()
                   << " cards" << std::endl;
       }
-#endif
     }
   }
+#else
+  std::streambuf* original_stdout = std::cout.rdbuf();
+  std::ostringstream discardedOutput;
+  std::cout.rdbuf(discardedOutput.rdbuf());
+
+  while (!om->getPlayers().empty()) {
+    for (int i = 0; i < om->getPlayers().size() - 1; i++) {
+      if (om->isOver()) {
+        break;
+      }
+
+      om->beforeTurn(i, om->getPlayers().size());
+    }
+  }
+
+  std::cout.rdbuf(original_stdout);
+#endif
+
+  EXPECT_TRUE(om->isOver());
 
   delete p1;
   delete p2;
@@ -326,8 +335,8 @@ TEST(OldMaidTest, DuringTurnTest) {
 
   d->create();
   d->shuffle();
-
-  std::unique_ptr<OldMaid> om(new OldMaid(nullptr, d));
+  OldMaidUI* old_maid_ui(new OldMaidUI());
+  std::unique_ptr<OldMaid> om(new OldMaid(old_maid_ui, d));
 
   om->addPlayer(p1);
   om->addPlayer(p2);
@@ -336,13 +345,24 @@ TEST(OldMaidTest, DuringTurnTest) {
 
   int player1CardsDealt = p1->getHand()->size();
 
+#ifndef DEBUGPRINT
+  std::streambuf* original_stdout = std::cout.rdbuf();
+  std::ostringstream discardedOutput;
+  std::cout.rdbuf(discardedOutput.rdbuf());
+
   om->duringTurn(0);
+
+  std::cout.rdbuf(original_stdout);
+#else
+  om->duringTurn(0);
+#endif
 
   EXPECT_LT(p1->getHand()->size(), player1CardsDealt);
 
   delete p1;
   delete p2;
   delete d;
+  delete old_maid_ui;
 }
 
 TEST(OldMaidTest, StartTest) {

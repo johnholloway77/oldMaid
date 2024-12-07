@@ -36,12 +36,17 @@ unsigned int OldMaidUI::requestCard(Player* p, std::list<Card*>* hand) {
   return 1;
 }
 
-void OldMaidUI::playFailed() {
-  std::cout << "OldMaidUI::playFailed() has not been implemented";
+void OldMaidUI::playFailed(Player* player) {
+  std::cout << player->name << " failed to gain a new pair and discard cards"
+            << std::endl;
+  std::cout << player->name << " hand size has increased to "
+            << player->getHand()->size() << " cards" << std::endl;
 };
 
-void OldMaidUI::playSucceeded() {
-  std::cout << "OldMaidUI::playSucceeded() has not been implemented";
+void OldMaidUI::playSucceeded(const std::string& playString, Player* player) {
+  std::cout << playString;
+  std::cout << player->name << " hand size has decreased to "
+            << player->getHand()->size() << " cards" << std::endl;
 };
 
 void OldMaidUI::outOfGame(Player* player) {
