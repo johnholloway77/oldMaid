@@ -129,14 +129,18 @@ void OldMaid::duringTurn(unsigned int playerNum) {
   }
 }
 
-bool OldMaid::turnOver() {
-  // Implementation of turnOver// or some other logic
-  std::cout << "OldMaid::turnOver has not been implemented";
-  return false;
-}
-
 bool OldMaid::isOver() {
   // Implementation of isOver
 
   return (players.empty());  // or some other logic
+}
+
+void OldMaid::start() {
+  while (!isOver()) {
+    for (int i = 0; i < players.size(); i++) {
+      beforeTurn(i, getPlayers().size());
+      duringTurn(i);
+      checkIfPlayerOut();
+    }
+  }
 }

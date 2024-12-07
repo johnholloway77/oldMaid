@@ -33,12 +33,6 @@ class Game {
   virtual void duringTurn(unsigned int playerNum) = 0;
 
   /**
-   * Checks if the player's turn is done.
-   * @return TRUE if player's turn is over, FALSE otherwise.
-   */
-  virtual bool turnOver() = 0;
-
-  /**
    * Checks if the game is over.
    * @return TRUE if the game is over, FALSE otherwise.
    */
@@ -74,7 +68,7 @@ class Game {
   /**
    * Start the game.
    */
-  void start();
+  virtual void start();
 
   /**
    * Checks if a player has no more cards to play and

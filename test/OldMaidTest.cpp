@@ -370,42 +370,32 @@ TEST(OldMaidTest, DuringTurnTest) {
 
 TEST(OldMaidTest, StartTest) {
   Player* p1 = new Player("Player1");
-
+  Player* p2(new Player("Player2"));
+  OldMaidUI* old_maid_ui(new OldMaidUI());
   Deck* d(new Deck());
 
   d->create();
   d->shuffle();
 
-  std::unique_ptr<OldMaid> om(new OldMaid(nullptr, d));
+  std::unique_ptr<OldMaid> om(new OldMaid(old_maid_ui, d));
 
   om->addPlayer(p1);
+  om->addPlayer(p2);
+
+  om->dealCards(om->getPlayers());
+
+  EXPECT_EQ(om->getPlayers().size(), 2);
+  EXPECT_EQ(om->getPlayersGoneOut().size(), 0);
 
   om->start();
 
-  delete p1;
-  delete d;
-
-  // FAIL();
-}
-
-TEST(OldMaidTest, TurnOverTest) {
-  Player* p1 = new Player("Player1");
-
-  Deck* d(new Deck());
-
-  d->create();
-  d->shuffle();
-
-  std::unique_ptr<OldMaid> om(new OldMaid(nullptr, d));
-
-  om->addPlayer(p1);
-
-  EXPECT_FALSE(om->turnOver());
+  EXPECT_EQ(om->getPlayers().size(), 0);
+  EXPECT_EQ(om->getPlayersGoneOut().size(), 2);
 
   delete p1;
+  delete p2;
   delete d;
-
-  // FAIL();
+  delete old_maid_ui;
 }
 
 TEST(OldMaidTest, HasSetTest) {

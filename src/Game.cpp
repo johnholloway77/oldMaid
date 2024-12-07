@@ -28,9 +28,7 @@ const std::vector<Player*>& Game::getPlayersGoneOut() {
   return playersGoneOut;
 }
 
-void Game::start() {
-  // std::cout << "Game::start()  has not been implemented!\n";
-}
+void Game::start() {}
 
 void Game::checkIfPlayerOut() {
   if (players.empty()) {
