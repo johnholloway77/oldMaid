@@ -33,13 +33,13 @@ class GameUI {
    * Show the outcome of the game (e.g. player scores)
    * @param players The players in the game.
    */
-  virtual void showGameOutcome(std::vector<Player*> players) {}
+  virtual void showGameOutcome(std::vector<Player*> players) = 0;
 
   /**
    * Indicate that a player has left the game.
    * @param player The player who left the game.
    */
-  virtual void outOfGame(Player* player) {}
+  virtual void outOfGame(Player* player) = 0;
 };
 
 #endif  // GAMEUI_H_INCLUDED
