@@ -13,6 +13,8 @@
 
 Player::~Player() {
   std::for_each(hand.begin(), hand.end(), [](Card* c) { delete c; });
+  std::for_each(discardedCards.begin(), discardedCards.end(),
+                [](Card* c) { delete c; });
 }
 
 void Player::addCard(Card* c) {
@@ -37,6 +39,10 @@ Card* Player::getCard(unsigned int index) {
 
 std::list<Card*>* Player::getHand() {
   return &hand;
+}
+
+std::list<Card*>* Player::getDiscardedCards() {
+  return &discardedCards;
 }
 
 void Player::takeCard(Player* otherPlayer) {

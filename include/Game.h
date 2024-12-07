@@ -27,12 +27,10 @@ class Game {
 
   /**
    * Perform actions after a player's turn.
-   * @param currentPlayer The player whose turn it is.
-   * @param players The collection of Player.
-   * @param played The card currently in play (e.g. laid down or drawn)
+   * @param playerNum The index of the player whose turn it is.
+   * @param numPlayers The number of players in the game.
    */
-  virtual void afterTurn(Player* currentPlayer, std::vector<Player*>* players,
-                         Card* played) = 0;
+  virtual void duringTurn(unsigned int playerNum) = 0;
 
   /**
    * Checks if the player's turn is done.
@@ -65,7 +63,13 @@ class Game {
    * Get the collection of players.
    * @return The collection of current players in the game.
    */
-  std::vector<Player*> getPlayers();
+  const std::vector<Player*>& getPlayers();
+
+  /**
+   * Get the collection of players who are out of the game.
+   * @return The collection of players no longer in the game.
+   */
+  const std::vector<Player*>& getPlayersGoneOut();
 
   /**
    * Start the game.

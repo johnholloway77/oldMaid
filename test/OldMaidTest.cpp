@@ -8,6 +8,7 @@
 
 #include "../include/Game.h"
 #include "../include/OldMaid.h"
+#include "../include/OldMaidUI.h"
 #include "../include/Player.h"
 
 TEST(OldMaidTest, DealCardsThreePlayerTest) {
@@ -38,7 +39,7 @@ TEST(OldMaidTest, DealCardsThreePlayerTest) {
     std::cout << player->name + " has this many cards: "
               << player->getHand()->size() << std::endl;
 
-    for (auto card : *player->getHand()) {
+    for (auto const card : *player->getHand()) {
       std::cout << "\t Suit: " + Card::getSuit(card->suit) +
                        " Rank: " + Card::getRank(card->rank)
                 << std::endl;
@@ -246,7 +247,7 @@ TEST(OldMaidTest, IsOutTest) {
 
   EXPECT_EQ(p2->getHand()->size(), 0);
 
-  EXPECT_EQ(om->getPlayers().size(), 1);
+  EXPECT_EQ(om->getPlayers().size(), 0);
 #ifdef DEBUGPRINT
   std::cout << "\nIsOutTest" << std::endl;
   std::cout << "players() size: " << om->getPlayers().size() << std::endl;
@@ -259,17 +260,18 @@ TEST(OldMaidTest, IsOutTest) {
   delete d;
 }
 
-TEST(OldMaidTest, BeforeTurnThreePlayerTest) {
+TEST(OldMaidTest, GameOverTest) {
   Player* p1 = new Player("Player1");
   Player* p2 = new Player("Player2");
   Player* p3 = new Player("Player3");
 
   Deck* d(new Deck());
+  OldMaidUI* old_ui(new OldMaidUI());
 
   d->create();
   d->shuffle();
 
-  std::unique_ptr<OldMaid> om(new OldMaid(nullptr, d));
+  std::unique_ptr<OldMaid> om(new OldMaid(old_ui, d));
 
   om->addPlayer(p1);
   om->addPlayer(p2);
@@ -283,33 +285,42 @@ TEST(OldMaidTest, BeforeTurnThreePlayerTest) {
   }
 
 #ifdef DEBUGPRINT
-  std::cout << "\nBeforeTurnThreePlayerTest" << std::endl;
 
   for (auto player : om->getPlayers()) {
     std::cout << player->name << " has " << player->getHand()->size()
               << " cards" << std::endl;
   }
+
 #endif
 
-  om->beforeTurn(0, om->getPlayers().size());
+  while (!om->getPlayers().empty()) {
+    for (int i = 0; i < om->getPlayers().size() - 1; i++) {
+      if (om->isOver()) {
+        break;
+      }
+
+      om->beforeTurn(i, om->getPlayers().size());
 
 #ifdef DEBUGPRINT
-  std::cout << "\nBeforeTurnThreePlayerTest" << std::endl;
 
-  for (auto player : om->getPlayers()) {
-    std::cout << player->name << " has " << player->getHand()->size()
-              << " cards" << std::endl;
-  }
+      for (auto player : om->getPlayers()) {
+        std::cout << player->name << " has " << player->getHand()->size()
+                  << " cards" << std::endl;
+      }
 #endif
+    }
+  }
 
   delete p1;
   delete p2;
   delete p3;
   delete d;
+  delete old_ui;
 }
 
-TEST(OldMaidTest, AfterTurnTest) {
+TEST(OldMaidTest, DuringTurnTest) {
   Player* p1 = new Player("Player1");
+  Player* p2 = new Player("Player1");
 
   Deck* d(new Deck());
 
@@ -319,11 +330,19 @@ TEST(OldMaidTest, AfterTurnTest) {
   std::unique_ptr<OldMaid> om(new OldMaid(nullptr, d));
 
   om->addPlayer(p1);
+  om->addPlayer(p2);
 
-  om->afterTurn(p1, nullptr, nullptr);
+  om->dealCards(om->getPlayers());
+
+  int player1CardsDealt = p1->getHand()->size();
+
+  om->duringTurn(0);
 
   delete p1;
+  delete p2;
   delete d;
+
+  EXPECT_LT(p1->getHand()->size(), player1CardsDealt);
 }
 
 TEST(OldMaidTest, StartTest) {
@@ -342,6 +361,8 @@ TEST(OldMaidTest, StartTest) {
 
   delete p1;
   delete d;
+
+  FAIL();
 }
 
 TEST(OldMaidTest, TurnOverTest) {
@@ -359,5 +380,29 @@ TEST(OldMaidTest, TurnOverTest) {
   EXPECT_FALSE(om->turnOver());
 
   delete p1;
+  delete d;
+
+  FAIL();
+}
+
+TEST(OldMaidTest, HasSetTest) {
+  Player* p1 = new Player("Player1");
+
+  Deck* d(new Deck());
+  OldMaidUI* old_ui(new OldMaidUI());
+
+  d->create();
+  d->shuffle();
+
+  std::unique_ptr<OldMaid> om(new OldMaid(old_ui, d));
+  om->addPlayer(p1);
+
+  om->dealCards(om->getPlayers());
+
+  EXPECT_EQ(p1->getHand()->size(), 51);
+  EXPECT_TRUE(om->hasSet(p1->getHand(), 2));
+
+  delete p1;
+  delete old_ui;
   delete d;
 }

@@ -6,6 +6,7 @@
 #include "../include/OldMaid.h"
 
 #include <random>
+#include <unordered_map>
 
 #include "../include/Player.h"
 #ifdef __linux__
@@ -50,20 +51,87 @@ void OldMaid::beforeTurn(unsigned int playerNum, unsigned int numPlayers) {
   auto receivingPlayer = players.begin();
   std::advance(receivingPlayer, playerNum);
 
-  (*receivingPlayer)->takeCard((*givingPlayer));
+#ifdef DEBUGPRINT
+
+  if (*receivingPlayer) {
+    std::cout << "Receiving Player Name: " << (*receivingPlayer)->name
+              << std::endl;
+  }
+
+  if (*givingPlayer) {
+    std::cout << "Giving Player name: " << (*givingPlayer)->name << std::endl;
+  }
+
+#endif
+
+  ui->requestCard((*receivingPlayer), (*givingPlayer)->getHand());
+  checkIfPlayerOut();
 }
 
-void OldMaid::afterTurn(Player* currentPlayer, std::vector<Player*>* players,
-                        Card* played) {
-  // Implementation of afterTurn
+void OldMaid::duringTurn(unsigned int playerNum) {
+  auto player = players.begin();
+  std::advance(player, playerNum);
+
+  while (hasSet((*player)->getHand(), 2)) {
+    std::unordered_map<Card::Rank, Card*> cardMap;
+    std::vector<Card*> toDiscard;
+
+    for (auto iterator = (*player)->getHand()->begin();
+         iterator != (*player)->getHand()->end();) {
+      Card* c = *iterator;
+
+      // find pairs of cards
+      auto card_iterator = cardMap.find(c->rank);
+
+      if (card_iterator != cardMap.end()) {
+        Card* matchingCard = card_iterator->second;
+
+        std::string success_string =
+            (*player)->name + " discarded the following pair:\n\tThe " +
+            Card::getRank(c->rank) + " of " + Card::getSuit(c->suit) +
+            " and the " + Card::getRank(matchingCard->rank) + " of " +
+            Card::getSuit(matchingCard->suit);
+
+        std::cout << success_string << std::endl;
+
+        cardMap.erase(c->rank);
+
+        toDiscard.push_back(c);
+        toDiscard.push_back(matchingCard);
+
+        iterator = (*player)->getHand()->erase(iterator);
+        (*player)->getHand()->erase(
+            std::remove_if((*player)->getHand()->begin(),
+                           (*player)->getHand()->end(),
+                           [&c, &matchingCard](Card* cardPointer) {
+                             return cardPointer == matchingCard;
+                           }),
+            (*player)->getHand()->end());
+
+      } else {
+        cardMap[c->rank] = c;
+        ++iterator;
+      }
+    }
+
+    std::for_each(toDiscard.begin(), toDiscard.end(), [player](Card* card) {
+      (*player)->getDiscardedCards()->push_back(card);
+    });
+
+    std::cout << (*player)->name << " has " << (*player)->getHand()->size()
+              << " cards in their hand" << std::endl;
+  }
 }
 
 bool OldMaid::turnOver() {
   // Implementation of turnOver// or some other logic
+  std::cout << "OldMaid::turnOver has not been implemented";
   return false;
 }
 
 bool OldMaid::isOver() {
   // Implementation of isOver
-  return (players.size() == (unsigned)1);  // or some other logic
+
+  // std::cout << "OldMaid::isOver has not been implemented";
+  return (players.empty());  // or some other logic
 }
