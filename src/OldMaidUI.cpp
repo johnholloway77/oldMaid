@@ -32,7 +32,6 @@ unsigned int OldMaidUI::requestCard(Player* p, std::list<Card*>* hand) {
 
     return 0;
   }
-
   std::cerr << p->name << " tried to take a card from an player with empty hand"
             << std::endl;
 

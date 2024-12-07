@@ -53,6 +53,42 @@ TEST(OldMaidUITest, RequestCardTest) {
   delete old_UI;
 }
 
+TEST(OldMaidUITest, RequestCardTestFromEmptyHand) {
+  Player* p1 = new Player("Player1");
+  Player* p2 = new Player("Player2");
+
+  std::string expectedOutput =
+      p1->name + " tried to take a card from an player with empty hand\n";
+
+  Deck* d(new Deck());
+
+  OldMaidUI* old_UI = new OldMaidUI();
+
+  std::unique_ptr<OldMaid> om(new OldMaid(old_UI, d));
+
+  om->addPlayer(p1);
+  om->addPlayer(p2);
+
+  om->dealCards(om->getPlayers());
+
+  std::streambuf* original_stderr = std::cerr.rdbuf();
+
+  std::ostringstream capturedErrorMessage;
+  std::cerr.rdbuf(capturedErrorMessage.rdbuf());
+
+  old_UI->requestCard(p1, p2->getHand());
+
+  std::cout.rdbuf(original_stderr);
+
+  EXPECT_THAT(capturedErrorMessage.str(),
+              ::testing::MatchesRegex(expectedOutput));
+
+  delete p1;
+  delete p2;
+  delete d;
+  delete old_UI;
+}
+
 TEST(OldMaidUITest, PlayFailedTest) {
   std::string expectedOutput =
       "Player1 failed to gain a new pair and discard cards\n"
