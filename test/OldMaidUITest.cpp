@@ -228,8 +228,6 @@ TEST(OldMaidUITest, OutOfGameIntegrationTest) {
 
   om->addPlayer(p1);
 
-  om->start();
-
   EXPECT_EQ(om->getPlayers().size(), 1);
 
   om->checkIfPlayerOut();
