@@ -67,5 +67,10 @@ int main(int argc, char** argv) {
 
   old_maid_game->start();
 
+  delete old_maid_ui;
+  delete deck;
+  delete old_maid_game;
+  std::for_each(players.begin(), players.end(), [](Player* p) { delete p; });
+
   return 0;
 }
