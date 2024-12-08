@@ -72,7 +72,7 @@ ${GTEST_BINARY}: $(GTEST_OBJECTS)
 
 # To perform the static check
 static:
-	${STATIC_ANALYSIS} --verbose --enable=all ${SRC_DIR} ${GTEST_DIR} \
+	${STATIC_ANALYSIS} --verbose --enable=all --check-level=exhaustive ${SRC_DIR} ${GTEST_DIR} \
 	${SRC_INCLUDE_DIR} ${PROJECT_SRC_DIR} ${STATIC_FLAGS}
 
 # To perform the style check
