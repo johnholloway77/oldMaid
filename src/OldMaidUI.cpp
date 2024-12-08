@@ -65,5 +65,8 @@ void OldMaidUI::showGameOutcome(std::vector<Player*> players) {
 
   Player* p = players.back();
 
+  auto card = p->getHand()->front();
+  std::cout << p->name << " has the card " << Card::getRank(card->rank)
+            << " of " << Card::getSuit(card->suit) << std::endl;
   std::cout << p->name << " was the old maid!!" << std::endl;
 }
