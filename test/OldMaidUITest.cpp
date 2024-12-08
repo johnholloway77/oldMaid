@@ -16,11 +16,10 @@ TEST(OldMaidUITest, DefaultConstructorTest) {
 }
 
 TEST(OldMaidUITest, RequestCardTest) {
-  std::string expectedOutput =
-      "Player1 picked the card .* of .* from their neighbour\n";
-
   Player* p1 = new Player("Player1");
   Player* p2 = new Player("Player2");
+  std::string expectedOutput =
+      p1->name + " picked the card .* of .* from their neighbour\n";
 
   Deck* d(new Deck());
 
