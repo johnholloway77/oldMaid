@@ -80,6 +80,10 @@ void OldMaid::duringTurn(unsigned int playerNum) {
   std::advance(player, playerNum);
 
   while (hasSet((*player)->getHand(), 2)) {
+    if (isOver()) {
+      return;
+    }
+
     playSuccessful = true;
 
     std::unordered_map<Card::Rank, Card*> cardMap;
