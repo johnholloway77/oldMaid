@@ -8,7 +8,6 @@
 #include <random>
 #include <unordered_map>
 
-#include "../include/Player.h"
 #ifdef __linux__
 #include <algorithm>
 #endif
@@ -39,8 +38,6 @@ void OldMaid::dealCards(const std::vector<Player*> p) {
 }
 
 void OldMaid::beforeTurn(unsigned int playerNum, unsigned int numPlayers) {
-  // Implementation of beforeTurn
-
   int givingNum = static_cast<int>(playerNum) - 1 < 0
                       ? numPlayers - 1
                       : static_cast<int>(playerNum) - 1;
@@ -53,19 +50,6 @@ void OldMaid::beforeTurn(unsigned int playerNum, unsigned int numPlayers) {
 
     auto receivingPlayer = players.begin();
     std::advance(receivingPlayer, playerNum);
-
-#ifdef DEBUGPRINT
-
-    if (*receivingPlayer) {
-      std::cout << "Receiving Player Name: " << (*receivingPlayer)->name
-                << std::endl;
-    }
-
-    if (*givingPlayer) {
-      std::cout << "Giving Player name: " << (*givingPlayer)->name << std::endl;
-    }
-
-#endif
 
     ui->requestCard((*receivingPlayer), givingHand);
     checkIfPlayerOut();
@@ -138,9 +122,7 @@ void OldMaid::duringTurn(unsigned int playerNum) {
 }
 
 bool OldMaid::isOver() {
-  // Implementation of isOver
-
-  return (players.empty());  // or some other logic
+  return (players.empty());
 }
 
 void OldMaid::start() {

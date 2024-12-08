@@ -181,7 +181,6 @@ TEST(OldMaidUITest, PlaySucceededTest) {
   om->duringTurn(0);
   std::cout.rdbuf(original_stdout);
 
-  // EXPECT_EQ(expectedOutput, capturedOutput.str());
   EXPECT_THAT(capturedOutput.str(), ::testing::MatchesRegex(expectedOutput));
 
   delete p1;
@@ -233,17 +232,7 @@ TEST(OldMaidUITest, OutOfGameIntegrationTest) {
 
   EXPECT_EQ(om->getPlayers().size(), 0);
 
-#ifdef DEBUGPRINT
-  EXPECT_EQ(capturedOutput.str(),
-            "Game::start()  has not been implemented!\n"
-            "\n"
-            "Game::checkIfPlayerOut\n"
-            "Player1 has 0 cards\n"
-            "Player1 is out of the game\n");
-
-#else
   EXPECT_EQ(capturedOutput.str(), p1->name + " is out of the game\n");
-#endif
 
   std::cout.rdbuf(original_stdout);
   delete p1;
@@ -286,15 +275,6 @@ TEST(OldMaidUITest, ShowGameOutcomeTest) {
     EXPECT_LE(player->getHand()->size(), 18);
   }
 
-#ifdef DEBUGPRINT
-
-  for (auto player : om->getPlayers()) {
-    std::cout << player->name << " has " << player->getHand()->size()
-              << " cards" << std::endl;
-  }
-
-#endif
-
   while (!om->getPlayers().empty()) {
     for (int i = 0; i < om->getPlayers().size() - 1; i++) {
       if (om->isOver()) {
@@ -302,14 +282,6 @@ TEST(OldMaidUITest, ShowGameOutcomeTest) {
       }
 
       om->beforeTurn(i, om->getPlayers().size());
-
-#ifdef DEBUGPRINT
-
-      for (auto player : om->getPlayers()) {
-        std::cout << player->name << " has " << player->getHand()->size()
-                  << " cards" << std::endl;
-      }
-#endif
     }
   }
 

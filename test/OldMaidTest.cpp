@@ -33,19 +33,6 @@ TEST(OldMaidTest, DealCardsThreePlayerTest) {
   for (auto player : om->getPlayers()) {
     EXPECT_GE(player->getHand()->size(), 16);
     EXPECT_LE(player->getHand()->size(), 18);
-
-#ifdef DEBUGPRINT
-    std::cout << "\nDealCardsThreePlayerTest" << std::endl;
-
-    std::cout << player->name + " has this many cards: "
-              << player->getHand()->size() << std::endl;
-
-    for (auto const card : *player->getHand()) {
-      std::cout << "\t Suit: " + Card::getSuit(card->suit) +
-                       " Rank: " + Card::getRank(card->rank)
-                << std::endl;
-    }
-#endif
   }
 
   delete p1;
@@ -267,10 +254,6 @@ TEST(OldMaidTest, IsOutTest) {
   EXPECT_EQ(p2->getHand()->size(), 0);
 
   EXPECT_EQ(om->getPlayers().size(), 0);
-#ifdef DEBUGPRINT
-  std::cout << "\nIsOutTest" << std::endl;
-  std::cout << "players() size: " << om->getPlayers().size() << std::endl;
-#endif
 
   EXPECT_TRUE(om->isOver());
 
@@ -300,28 +283,6 @@ TEST(OldMaidTest, GameOverTest) {
 
   om->dealCards(om->getPlayers());
 
-#ifdef DEBUGPRINT
-
-  for (auto player : om->getPlayers()) {
-    std::cout << player->name << " has " << player->getHand()->size()
-              << " cards" << std::endl;
-  }
-
-  while (!om->getPlayers().empty()) {
-    for (int i = 0; i < om->getPlayers().size() - 1; i++) {
-      if (om->isOver()) {
-        break;
-      }
-
-      om->beforeTurn(i, om->getPlayers().size());
-
-      for (auto player : om->getPlayers()) {
-        std::cout << player->name << " has " << player->getHand()->size()
-                  << " cards" << std::endl;
-      }
-    }
-  }
-#else
   std::streambuf* original_stdout = std::cout.rdbuf();
   std::ostringstream discardedOutput;
   std::cout.rdbuf(discardedOutput.rdbuf());
@@ -337,7 +298,6 @@ TEST(OldMaidTest, GameOverTest) {
   }
 
   std::cout.rdbuf(original_stdout);
-#endif
 
   EXPECT_TRUE(om->isOver());
 
@@ -366,7 +326,6 @@ TEST(OldMaidTest, DuringTurnTest) {
 
   int player1CardsDealt = p1->getHand()->size();
 
-#ifndef DEBUGPRINT
   std::streambuf* original_stdout = std::cout.rdbuf();
   std::ostringstream discardedOutput;
   std::cout.rdbuf(discardedOutput.rdbuf());
@@ -374,9 +333,6 @@ TEST(OldMaidTest, DuringTurnTest) {
   om->duringTurn(0);
 
   std::cout.rdbuf(original_stdout);
-#else
-  om->duringTurn(0);
-#endif
 
   EXPECT_LT(p1->getHand()->size(), player1CardsDealt);
 
@@ -405,7 +361,13 @@ TEST(OldMaidTest, StartTest) {
   EXPECT_EQ(om->getPlayers().size(), 2);
   EXPECT_EQ(om->getPlayersGoneOut().size(), 0);
 
+  std::streambuf* original_stdout = std::cout.rdbuf();
+  std::ostringstream discardedOutput;
+  std::cout.rdbuf(discardedOutput.rdbuf());
+
   om->start();
+
+  std::cout.rdbuf(original_stdout);
 
   EXPECT_EQ(om->getPlayers().size(), 0);
   EXPECT_EQ(om->getPlayersGoneOut().size(), 2);

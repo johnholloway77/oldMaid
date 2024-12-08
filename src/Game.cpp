@@ -36,12 +36,6 @@ void Game::checkIfPlayerOut() {
   auto iterator =
       std::remove_if(players.begin(), players.end(), [&](Player* p) {
         if (p->getHand()->empty()) {
-#ifdef DEBUGPRINT
-//          std::cout << "\nGame::checkIfPlayerOut" << std::endl;
-//
-//          std::cout << p->name << " has " << p->getHand()->size() << " cards"
-//                    << std::endl;
-#endif
           playersGoneOut.push_back(p);
 
           if (ui != nullptr) {
@@ -61,10 +55,6 @@ void Game::checkIfPlayerOut() {
     Player* oldMaidPlayer = players.back();
 
     players.clear();
-
-#ifdef DEBUGPRINT
-    std::cout << "Players vector size " << players.size() << std::endl;
-#endif
 
     playersGoneOut.push_back(oldMaidPlayer);
 
