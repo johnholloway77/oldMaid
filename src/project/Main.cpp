@@ -6,9 +6,9 @@
 #include <iostream>
 #include <string>
 
-#include "OldMaid.h"
-#include "OldMaidUI.h"
-#include "Player.h"
+#include "../../include/OldMaid.h"
+#include "../../include/OldMaidUI.h"
+#include "../../include/Player.h"
 
 #ifdef __linux__
 #include <algorithm>
