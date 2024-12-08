@@ -242,7 +242,7 @@ TEST(OldMaidUITest, OutOfGameIntegrationTest) {
 
 TEST(OldMaidUITest, ShowGameOutcomeTest) {
   std::string expectedOutput1 =
-      "The following players successfully dealt their hands and succeeded: "
+      "The following players successfully got rid of all of their cards: "
       "\n";
   std::string expectedOutput2 = " was the old maid!!\n";
 
