@@ -17,11 +17,12 @@ TEST(OldMaidTest, DealCardsThreePlayerTest) {
   Player* p3 = new Player("Player3");
 
   Deck* d(new Deck());
+  OldMaidUI* old_maid_ui(new OldMaidUI);
 
   d->create();
   d->shuffle();
 
-  std::unique_ptr<OldMaid> om(new OldMaid(nullptr, d));
+  std::unique_ptr<OldMaid> om(new OldMaid(old_maid_ui, d));
 
   om->addPlayer(p1);
   om->addPlayer(p2);
@@ -51,6 +52,7 @@ TEST(OldMaidTest, DealCardsThreePlayerTest) {
   delete p2;
   delete p3;
   delete d;
+  delete old_maid_ui;
 }
 
 TEST(OldMaidTest, HasSetOfZeroTest) {
@@ -58,16 +60,19 @@ TEST(OldMaidTest, HasSetOfZeroTest) {
 
   Deck* d(new Deck());
 
+  OldMaidUI* old_maid_ui(new OldMaidUI);
+
   d->create();
   d->shuffle();
 
-  std::unique_ptr<OldMaid> om(new OldMaid(nullptr, d));
+  std::unique_ptr<OldMaid> om(new OldMaid(old_maid_ui, d));
   om->addPlayer(p1);
 
   EXPECT_FALSE(om->hasSet(p1->getHand(), 0));
 
   delete p1;
   delete d;
+  delete old_maid_ui;
 }
 
 TEST(OldMaidTest, HasSetOfOneTest) {
@@ -75,10 +80,12 @@ TEST(OldMaidTest, HasSetOfOneTest) {
 
   Deck* d(new Deck());
 
+  OldMaidUI* old_maid_ui(new OldMaidUI);
+
   d->create();
   d->shuffle();
 
-  std::unique_ptr<OldMaid> om(new OldMaid(nullptr, d));
+  std::unique_ptr<OldMaid> om(new OldMaid(old_maid_ui, d));
   om->addPlayer(p1);
 
   EXPECT_FALSE(om->hasSet(p1->getHand(), 1));
@@ -89,17 +96,19 @@ TEST(OldMaidTest, HasSetOfOneTest) {
 
   delete p1;
   delete d;
+  delete old_maid_ui;
 }
 
 TEST(OldMaidTest, HasSetOfTwoTest) {
   Player* p1 = new Player("Player1");
 
   Deck* d(new Deck());
+  OldMaidUI* old_maid_ui(new OldMaidUI);
 
   d->create();
   d->shuffle();
 
-  std::unique_ptr<OldMaid> om(new OldMaid(nullptr, d));
+  std::unique_ptr<OldMaid> om(new OldMaid(old_maid_ui, d));
   om->addPlayer(p1);
 
   EXPECT_FALSE(om->hasSet(p1->getHand(), 2));
@@ -123,7 +132,7 @@ TEST(OldMaidTest, HasSetOfTwoTest) {
   EXPECT_TRUE(om->hasSet(p1->getHand(), 2));
 
   delete p1;
-
+  delete old_maid_ui;
   delete d;
 }
 
@@ -131,11 +140,12 @@ TEST(OldMaidTest, HasSetOfThreeTest) {
   Player* p1 = new Player("Player1");
 
   Deck* d(new Deck());
+  OldMaidUI* old_maid_ui(new OldMaidUI);
 
   d->create();
   d->shuffle();
 
-  std::unique_ptr<OldMaid> om(new OldMaid(nullptr, d));
+  std::unique_ptr<OldMaid> om(new OldMaid(old_maid_ui, d));
   om->addPlayer(p1);
 
   EXPECT_FALSE(om->hasSet(p1->getHand(), 3));
@@ -165,6 +175,7 @@ TEST(OldMaidTest, HasSetOfThreeTest) {
 
   delete p1;
   delete d;
+  delete old_maid_ui;
 }
 
 TEST(OldMaidTest, CheckOutTest) {
@@ -173,11 +184,12 @@ TEST(OldMaidTest, CheckOutTest) {
   Player* p3 = new Player("Player3");
 
   Deck* d(new Deck());
+  OldMaidUI* old_maid_ui(new OldMaidUI);
 
   d->create();
   d->shuffle();
 
-  std::unique_ptr<OldMaid> om(new OldMaid(nullptr, d));
+  std::unique_ptr<OldMaid> om(new OldMaid(old_maid_ui, d));
 
   // test branch coverage for checkIfOut when players.size() == 0
   om->checkIfPlayerOut();
@@ -196,6 +208,7 @@ TEST(OldMaidTest, CheckOutTest) {
   delete p2;
   delete p3;
   delete d;
+  delete old_maid_ui;
 }
 
 TEST(OldMaidTest, CheckOutCardsDealtTest) {
@@ -204,11 +217,12 @@ TEST(OldMaidTest, CheckOutCardsDealtTest) {
   Player* p3 = new Player("Player3");
 
   Deck* d(new Deck());
+  OldMaidUI* old_maid_ui(new OldMaidUI);
 
   d->create();
   d->shuffle();
 
-  std::unique_ptr<OldMaid> om(new OldMaid(nullptr, d));
+  std::unique_ptr<OldMaid> om(new OldMaid(old_maid_ui, d));
 
   om->addPlayer(p1);
   om->addPlayer(p2);
@@ -225,6 +239,7 @@ TEST(OldMaidTest, CheckOutCardsDealtTest) {
   delete p2;
   delete p3;
   delete d;
+  delete old_maid_ui;
 }
 
 TEST(OldMaidTest, IsOutTest) {
@@ -232,11 +247,12 @@ TEST(OldMaidTest, IsOutTest) {
   Player* p2 = new Player("Player2_IsOutTest");
 
   Deck* d(new Deck());
+  OldMaidUI* old_maid_ui(new OldMaidUI);
 
   d->create();
   d->shuffle();
 
-  OldMaid* om(new OldMaid(nullptr, d));
+  OldMaid* om(new OldMaid(old_maid_ui, d));
 
   om->addPlayer(p1);
 
@@ -262,6 +278,7 @@ TEST(OldMaidTest, IsOutTest) {
   delete p2;
   delete d;
   delete om;
+  delete old_maid_ui;
 }
 
 TEST(OldMaidTest, GameOverTest) {
