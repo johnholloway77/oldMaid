@@ -1,6 +1,6 @@
 # Project 2: Old Maid Card Game
 
-The Old Maid card game has been developed as Project /#2 for the class CPSC-2720 at the Univeristy of Lethbridge, fall
+The Old Maid card game has been developed as Project #2 for the class CPSC-2720 at the Univeristy of Lethbridge, fall
 
 2024.
 
