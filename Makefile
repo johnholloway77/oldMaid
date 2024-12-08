@@ -79,12 +79,12 @@ static:
 style:
 	${STYLE_CHECK} --recursive ${SRC_DIR}/* ${GTEST_DIR}/* ${SRC_INCLUDE_DIR}/*
 
+memcheck-game: ${BINARY}
+	valgrind --tool=memcheck --leak-check=yes --error-exitcode=1 ./${BINARY}
+
 #Check for memory leaks with Valgrind. Off to Valhalla we go!!
 memcheck-test: ${GTEST_BINARY}
 	valgrind --tool=memcheck --leak-check=yes --error-exitcode=1 ./${GTEST_BINARY} ${LIBS}
-
-test: ${GTEST_BINARY}
-	./${GTEST_BINARY}
 
 .PHONY: docs
 docs: ${PROJECT_SRC_DIR}
