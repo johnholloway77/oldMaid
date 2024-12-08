@@ -67,6 +67,8 @@ void Game::checkIfPlayerOut() {
 #endif
 
     playersGoneOut.push_back(oldMaidPlayer);
+
+    ui->showGameOutcome(playersGoneOut);
   }
 }
 
