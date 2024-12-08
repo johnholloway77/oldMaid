@@ -63,8 +63,8 @@ $(BINARY): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -o $@ $(OBJECTS)
 
 ${GTEST_BINARY}: $(GTEST_OBJECTS)
-	@echo "num_cores is: $(num_cores)"
 	${CXX} $(CXXFLAGS) $(DEBUGFLAGS) $(INCLUDE) -o $@ $^ -L/usr/local/lib ${GTEST_LIB} ${LIBS}
+	./testGame
 
 # Rule to compile .cpp files into object files
 %.o: %.cpp
