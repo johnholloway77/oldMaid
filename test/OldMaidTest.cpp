@@ -88,7 +88,7 @@ TEST(OldMaidTest, HasSetOfOneTest) {
   EXPECT_TRUE(om->hasSet(p1->getHand(), 1));
 
   delete p1;
-  delete d;
+  // delete d;
 }
 
 TEST(OldMaidTest, HasSetOfTwoTest) {
@@ -236,7 +236,7 @@ TEST(OldMaidTest, IsOutTest) {
   d->create();
   d->shuffle();
 
-  std::unique_ptr<OldMaid> om(new OldMaid(nullptr, d));
+  OldMaid* om(new OldMaid(nullptr, d));
 
   om->addPlayer(p1);
 
@@ -261,6 +261,7 @@ TEST(OldMaidTest, IsOutTest) {
   delete p1;
   delete p2;
   delete d;
+  delete om;
 }
 
 TEST(OldMaidTest, GameOverTest) {

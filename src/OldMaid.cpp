@@ -136,6 +136,15 @@ bool OldMaid::isOver() {
 }
 
 void OldMaid::start() {
+  if (deck) {
+    deck->create();
+    deck->shuffle();
+
+    if (!players.empty()) {
+      dealCards(players);
+    }
+  }
+
   while (!isOver()) {
     for (int i = 0; i < players.size(); i++) {
       beforeTurn(i, getPlayers().size());

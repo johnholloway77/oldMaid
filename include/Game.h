@@ -68,7 +68,7 @@ class Game {
   /**
    * Start the game.
    */
-  virtual void start();
+  virtual void start() = 0;
 
   /**
    * Checks if a player has no more cards to play and

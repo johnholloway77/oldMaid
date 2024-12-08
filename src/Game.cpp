@@ -28,8 +28,6 @@ const std::vector<Player*>& Game::getPlayersGoneOut() {
   return playersGoneOut;
 }
 
-void Game::start() {}
-
 void Game::checkIfPlayerOut() {
   if (players.empty()) {
     return;
