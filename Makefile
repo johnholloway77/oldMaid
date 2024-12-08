@@ -48,6 +48,7 @@ DOXY_DIR = docs
 COVERAGE_DIR = coverage
 COVERAGE_RESULTS = results.coverage
 ifeq ($(UNAME_S), FreeBSD)
+CHECK_LEVEL = --check-level=exhaustive
 COV = llvm-cov
 else
 GCOV = gcov
@@ -72,8 +73,9 @@ ${GTEST_BINARY}: $(GTEST_OBJECTS)
 
 # To perform the static check
 static:
-	${STATIC_ANALYSIS} --verbose --enable=all --check-level=exhaustive ${SRC_DIR} ${GTEST_DIR} \
-	${SRC_INCLUDE_DIR} ${PROJECT_SRC_DIR} ${STATIC_FLAGS}
+	${STATIC_ANALYSIS} --verbose --enable=all ${CHECK_LEVEL} ${SRC_DIR} ${GTEST_DIR} \
+    	${SRC_INCLUDE_DIR} ${PROJECT_SRC_DIR} ${STATIC_FLAGS}
+
 
 # To perform the style check
 style:
