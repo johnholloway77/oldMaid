@@ -88,7 +88,7 @@ TEST(OldMaidTest, HasSetOfOneTest) {
   EXPECT_TRUE(om->hasSet(p1->getHand(), 1));
 
   delete p1;
-  // delete d;
+  delete d;
 }
 
 TEST(OldMaidTest, HasSetOfTwoTest) {
