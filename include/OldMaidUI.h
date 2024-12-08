@@ -2,6 +2,7 @@
 #define OLDMAIDUI_H
 
 #include <list>
+#include <string>
 #include <vector>
 
 #include "Card.h"

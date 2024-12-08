@@ -2,6 +2,7 @@
 #define GAMEUI_H_INCLUDED
 
 #include <list>
+#include <string>
 #include <vector>
 
 #include "Card.h"
