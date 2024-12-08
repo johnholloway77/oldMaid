@@ -23,14 +23,14 @@ ifeq ($(UNAME_S), FreeBSD)
     num_cores := $(shell sysctl -n hw.ncpu)
 else
     CXX := g++
-    INCLUDE = -I ${SRC_INCLUDE_DIR}
+    INCLUDE = -I ${SRC_INCLUDE_DIR} -I ${GTEST_INCLUDE_DIR}
 	CXXWITHCOVERAGEFLAGS = ${CXXFLAGS} -fprofile-arcs -ftest-coverage
 	num_cores := $(shell nproc)
 endif
 CXXFLAGS := -Wall -Wextra -std=c++17
 DEBUG := -g -O0
 LIBS :=
-GTEST_LIB:= -lgtest
+GTEST_LIB:= -lgtest -lgmock
 
 #tell gmake to use all the cores on the laptop or VM
 MAKEFLAGS += -j$(num_cores)
@@ -73,7 +73,7 @@ ${GTEST_BINARY}: $(GTEST_OBJECTS)
 # To perform the static check
 static:
 	${STATIC_ANALYSIS} --verbose --enable=all ${SRC_DIR} ${GTEST_DIR} \
-	${SRC_INCLUDE_DIR} ${STATIC_FLAGS}
+	${SRC_INCLUDE_DIR} ${PROJECT_SRC_DIR} ${STATIC_FLAGS}
 
 # To perform the style check
 style:

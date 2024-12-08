@@ -43,13 +43,13 @@ void OldMaidUI::playFailed(Player* player) {
             << std::endl;
   std::cout << player->name << " hand size has increased to "
             << player->getHand()->size() << " cards" << std::endl;
-};
+}
 
 void OldMaidUI::playSucceeded(const std::string& playString, Player* player) {
   std::cout << playString;
   std::cout << player->name << " hand size has decreased to "
             << player->getHand()->size() << " cards" << std::endl;
-};
+}
 
 void OldMaidUI::outOfGame(Player* player) {
   std::cout << player->name + " is out of the game" << std::endl;

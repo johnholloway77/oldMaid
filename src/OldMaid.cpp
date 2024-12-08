@@ -48,24 +48,28 @@ void OldMaid::beforeTurn(unsigned int playerNum, unsigned int numPlayers) {
   auto givingPlayer = players.begin();
   std::advance(givingPlayer, givingNum);
 
-  auto receivingPlayer = players.begin();
-  std::advance(receivingPlayer, playerNum);
+  if (givingPlayer != players.end() && *givingPlayer) {
+    auto givingHand = (*givingPlayer)->getHand();
+
+    auto receivingPlayer = players.begin();
+    std::advance(receivingPlayer, playerNum);
 
 #ifdef DEBUGPRINT
 
-  if (*receivingPlayer) {
-    std::cout << "Receiving Player Name: " << (*receivingPlayer)->name
-              << std::endl;
-  }
+    if (*receivingPlayer) {
+      std::cout << "Receiving Player Name: " << (*receivingPlayer)->name
+                << std::endl;
+    }
 
-  if (*givingPlayer) {
-    std::cout << "Giving Player name: " << (*givingPlayer)->name << std::endl;
-  }
+    if (*givingPlayer) {
+      std::cout << "Giving Player name: " << (*givingPlayer)->name << std::endl;
+    }
 
 #endif
 
-  ui->requestCard((*receivingPlayer), (*givingPlayer)->getHand());
-  checkIfPlayerOut();
+    ui->requestCard((*receivingPlayer), givingHand);
+    checkIfPlayerOut();
+  }
 }
 
 void OldMaid::duringTurn(unsigned int playerNum) {
