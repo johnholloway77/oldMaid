@@ -14,7 +14,7 @@ class OldMaid : public Game {
    */
   OldMaid(GameUI* ui, Deck* deck) : Game(ui, deck) {}
 
-  virtual ~OldMaid() {}
+  ~OldMaid() override {}
   void dealCards(std::vector<Player*> p) override;
   void beforeTurn(unsigned int playerNum, unsigned int numPlayers) override;
   void duringTurn(unsigned int playerNum) override;

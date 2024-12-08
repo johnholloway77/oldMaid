@@ -11,7 +11,7 @@
 class OldMaidUI : public GameUI {
  public:
   OldMaidUI() {}
-  ~OldMaidUI() {}
+  ~OldMaidUI() override {}
 
   unsigned int requestCard(Player* p, std::list<Card*>* hand) override;
   void playFailed(Player* player) override;

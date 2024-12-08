@@ -57,15 +57,18 @@ void OldMaidUI::outOfGame(Player* player) {
 
 void OldMaidUI::showGameOutcome(std::vector<Player*> players) {
   std::cout
-      << "The following players successfully dealt their hands and succeeded: "
+      << "The following players successfully got rid of all of their cards: "
       << std::endl;
 
-  std::for_each(players.begin(), players.end() - 1,
-                [](Player* p) { std::cout << "\t" << p->name << std::endl; });
+  int i = 1;
+  std::for_each(players.begin(), players.end() - 1, [&i](const Player* p) {
+    std::cout << "\t" << i << ": " << p->name << std::endl;
+    i++;
+  });
 
   Player* p = players.back();
 
-  auto card = p->getHand()->front();
+  const auto* card = p->getHand()->front();
   std::cout << p->name << " has the card " << Card::getRank(card->rank)
             << " of " << Card::getSuit(card->suit) << std::endl;
   std::cout << p->name << " was the old maid!!" << std::endl;
