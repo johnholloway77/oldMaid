@@ -78,7 +78,7 @@ TEST(OldMaidUITest, RequestCardTestFromEmptyHand) {
 
   old_UI->requestCard(p1, p2->getHand());
 
-  std::cout.rdbuf(original_stderr);
+  std::cerr.rdbuf(original_stderr);
 
   EXPECT_THAT(capturedErrorMessage.str(),
               ::testing::MatchesRegex(expectedOutput));
@@ -254,7 +254,8 @@ TEST(OldMaidUITest, OutOfGameIntegrationTest) {
 
 TEST(OldMaidUITest, ShowGameOutcomeTest) {
   std::string expectedOutput1 =
-      "The following players successfully dealt their hands and succeeded: \n";
+      "The following players successfully dealt their hands and succeeded: "
+      "\n";
   std::string expectedOutput2 = " was the old maid!!\n";
 
   std::streambuf* original_stdout = std::cout.rdbuf();
